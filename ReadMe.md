@@ -1,9 +1,9 @@
 
-#Streak Counter
+# Streak Counter
 
 This is a simple app that counts the number of days you have done a certain activity. Built with typescript,CSS and HTML.
 
-##Features
+## Features
 
 - [x] Add a new activity
 
@@ -12,7 +12,7 @@ This is a simple app that counts the number of days you have done a certain acti
 - [x] View streaks
 
 
-##Installation
+## Installation
 
 - Clone the repo
 
@@ -22,12 +22,12 @@ This is a simple app that counts the number of days you have done a certain acti
 
 - Open index.html in your browser
 
-##Contributing
+## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 
-##License
+## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 

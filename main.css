@@ -173,6 +173,7 @@ ion-icon{
     border: 1px solid rgba(255,117,68,255);
     width: 200px;
     height: fit-content;
+
 }
 .task img{
     max-width: 100%;
@@ -219,4 +220,18 @@ ion-icon{
 }
 .task-well-done .task{
     border: none;
+}
+.modal-content .task{
+    z-index: 1;
+}
+
+#best-btn{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
 }

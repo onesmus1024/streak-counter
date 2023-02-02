@@ -5,23 +5,24 @@ import Task from "./classes/task.js";
 
 
 
+
 let addBtn = document.querySelector("#add-btn")!;
 let modal = document.querySelector('#my-modal')! as HTMLDivElement;
 let modalContent = document.querySelector('.modal-content')! as HTMLDivElement;
 let taskContainer = document.querySelector('.task-container')! as HTMLDivElement;
-// let body = document.querySelector('body')! as HTMLBodyElement;
-
+let bestBtn = document.querySelector('#best-btn')! as HTMLButtonElement;
 // let taskTemplateContainer:string = `<div class="container task-container"></div>`
 
-
+// create a new instance of the streakCounter class
 let streakCounter = new StreakCounter();
-let task1 = new Task("Stop smoking", "https://images.unsplash.com/photo-1674900199166-a60564143d30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60", "2020-11-10");
-let task2 = new Task("Bike riding", "https://images.unsplash.com/photo-1674900199166-a60564143d30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60", "2020-10-10");
-streakCounter.tasks.push(task1);
-streakCounter.tasks.push(task2);
+
+// create a new instance of the bestDoneTask class and pass the streakCounter instance to it
 let bestDoneTask = new BestDoneTask(streakCounter);
 
+
+// add event listener to taskContainer
 taskContainer.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
     console.log(e.target);
     // check if the target is the delete button
     let target = e.target as HTMLElement;
@@ -31,8 +32,11 @@ taskContainer.addEventListener("click", (e) => {
     if (target.className == "delete-btn") {
         deleteTask(Number(target.id));
     }
+    
+    
         
 })
+
 
 modalContent.addEventListener("click", (e) => {
     let target = e.target as HTMLElement;
@@ -43,7 +47,7 @@ modalContent.addEventListener("click", (e) => {
 
 
 
-
+//  form template for adding a new task
 let formTemplate: string = `
         <span class="close">&times;</span>
         <div class="form-group">
@@ -68,7 +72,9 @@ let formTemplate: string = `
 
 
 
-
+//  Data validation for the form if the user tries to submit an empty form the error message will be displayed for 5 seconds
+// and the input fields will be highlighted in red
+// if the user fills all the fields the task will be added to the streakCounter instance
 const validateForm = (): void => {
     let submitBtn = document.querySelector('#submit-btn')! as HTMLButtonElement;
     let formGroup = document.querySelector('.form-group')!;
@@ -118,6 +124,7 @@ const validateForm = (): void => {
     })
 }
 
+// fuction to close the modal which show be called when the modal is opened
 const closeModal = (): void => {
     let closeBtn = document.querySelector('.close')! as HTMLSpanElement;
     let task = document.querySelector('.task-well-done')! as HTMLDivElement;
@@ -133,7 +140,7 @@ const closeModal = (): void => {
     })
 }
 
-
+// add event listener to the add button which will open the modal and display the form
 addBtn.addEventListener("click", () => {
     modal.style.display = "flex";
     modalContent.innerHTML = "";
@@ -145,7 +152,10 @@ addBtn.addEventListener("click", () => {
 }
 )
 
-
+/**
+ * 
+ * @param {number} id the id of the task to be deleted
+ */
 const deleteTask = (id: number) => {
     let task = streakCounter.tasks.find((task) => task.id == id);
     let index = streakCounter.tasks.indexOf(task!);
@@ -153,6 +163,12 @@ const deleteTask = (id: number) => {
     renderTasks();
     modal.style.display = "none";
 } 
+
+/**
+ * 
+ * @param {number} id the id of the task to be displayed
+ * returns the task with the id passed as a parameter
+ */
 const showSingle = (id: number) => {
     let task = streakCounter.tasks.find((task) => task.id == id);
     modalContent.innerHTML = "";
@@ -181,7 +197,7 @@ const showSingle = (id: number) => {
 
 }
 
-
+//  function to render all the tasks in the streakCounter instance to the DOM
 const renderTasks = (): void => {
     taskContainer.innerHTML = "";
     streakCounter.tasks.forEach((task) => {
@@ -200,7 +216,9 @@ const renderTasks = (): void => {
 }
 
 
-setTimeout(() => {
+// event listener to the best done button which will display the best done task inside the modal
+bestBtn.addEventListener("click", () => {
+    if(streakCounter.tasks.length > 0){
     let task = bestDoneTask.getBest()
     streakCounter.tasks.push(task);
     modal.style.display = "flex";
@@ -223,4 +241,20 @@ setTimeout(() => {
     </div>`
     modalContent.innerHTML += singleTaskTemplate;
     closeModal();
-},5000)
+    }
+    else{
+
+        modal.style.display = "flex";
+        modalContent.innerHTML = "";
+        let singleTaskTemplate = `
+        <span class="close">&times;</span>
+        <div class='task-well-done'>
+       
+        <div class="task">
+        <p class="task-name">You have no tasks</p>
+        </div>
+        </div>`
+    modalContent.innerHTML += singleTaskTemplate;
+    closeModal();
+    }
+})

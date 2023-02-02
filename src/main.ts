@@ -5,7 +5,7 @@ import Task from "./classes/task.js";
 
 
 
-
+// get the elements from the DOM
 let addBtn = document.querySelector("#add-btn")!;
 let modal = document.querySelector('#my-modal')! as HTMLDivElement;
 let modalContent = document.querySelector('.modal-content')! as HTMLDivElement;

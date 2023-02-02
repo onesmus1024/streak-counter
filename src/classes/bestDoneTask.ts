@@ -2,6 +2,18 @@ import bestInterface from '../interfaces/bestInterface';
 import StreakCounter from './streakCounter';
 import Task from './task';
 import Days from './days.js';
+
+
+
+
+/**
+ * Class representing a bestDoneTask
+ * @class BestDoneTask
+ * @implements {bestInterface}
+ * @param {StreakCounter} streakCounter - streakCounter object
+ * @method getBest - returns the task with the most done days
+ * 
+ */
 class BestDoneTask implements bestInterface {
     streakCounter: StreakCounter;
     constructor(streakCounter: StreakCounter) {

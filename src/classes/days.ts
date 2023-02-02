@@ -1,6 +1,15 @@
 
 import Task from './task';
 
+
+
+/**
+ * Class representing a days
+ * @class Days
+ * @param {Task} task - task
+ * @method getDays - returns the number of days between today and the  start  task date
+ * 
+ */
 class Days{
     private task: Task;
     private constructor(task: Task) {

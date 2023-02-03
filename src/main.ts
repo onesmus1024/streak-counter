@@ -23,7 +23,6 @@ let bestDoneTask = new BestDoneTask(streakCounter);
 // add event listener to taskContainer
 taskContainer.addEventListener("click", (e) => {
     e.stopImmediatePropagation();
-    console.log(e.target);
     // check if the target is the delete button
     let target = e.target as HTMLElement;
     if (target.className == "task") {
@@ -31,6 +30,9 @@ taskContainer.addEventListener("click", (e) => {
     }
     if (target.className == "delete-btn") {
         deleteTask(Number(target.id));
+    }
+    if (target.tagName == "img") {
+        showSingle(Number(target.id));
     }
     
     
@@ -58,7 +60,7 @@ let formTemplate: string = `
                     <input type="text" name="name" id="name" placeholder="name">
                 </div>
                 <div class="input-group">
-                    <label for="task-icon">images</label>
+                    <label for="task-icon">image</label>
                     <input type="text" name="task-icon" id="task-icon" placeholder="image url">
                 </div>
                 <div class="input-group">
@@ -102,6 +104,7 @@ const validateForm = (): void => {
             if (taskDate.value == "") {
                 taskDate.style.border = "1px solid red";
             }
+            
             setTimeout(() => {
                 let error = document.querySelector('.error')! as HTMLParagraphElement;
                 if (error) {
@@ -203,7 +206,7 @@ const renderTasks = (): void => {
     streakCounter.tasks.forEach((task) => {
         let taskTemplate = `
         <div class="task" id="${task.id}">
-            <img src="${task.imageUrl}" alt="${task.name}">
+            <img src="${task.imageUrl}" alt="${task.name}" id="${task.id} >
             <p class="date">${task.date}</p>
             <p>Days done: ${Days.create(task).getDays()}</p>
             <p class="task-name">${task.name}</p>
